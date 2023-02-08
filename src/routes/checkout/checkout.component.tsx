@@ -6,7 +6,7 @@ import {
 } from '../../store/cart/cart.selector';
 
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
-import PaymentForm from '../../components/payment-form/payment-form.component';
+// import PaymentForm from '../../components/payment-form/payment-form.component';
 
 import {
   CheckoutContainer,
@@ -14,6 +14,7 @@ import {
   HeaderBlock,
   Total,
 } from './checkout.styles';
+import { EmptyMessage } from '../../components/cart-dropdown/cart-dropdown.styles';
 
 const Checkout = () => {
   const cartItems = useSelector(selectCartItems);
@@ -21,6 +22,9 @@ const Checkout = () => {
 
   return (
     <CheckoutContainer>
+      <h2>
+        Place Order
+      </h2>
       <CheckoutHeader>
         <HeaderBlock>
           <span>Product</span>
@@ -38,11 +42,14 @@ const Checkout = () => {
           <span>Remove</span>
         </HeaderBlock>
       </CheckoutHeader>
-      {cartItems.map((cartItem) => (
-        <CheckoutItem key={cartItem.id} cartItem={cartItem} />
-      ))}
+      {cartItems.length ? (
+          cartItems.map((cartItem) =>  <CheckoutItem key={cartItem.id} cartItem={cartItem} />
+          )
+        ) : (
+          <EmptyMessage>Your cart is empty</EmptyMessage>
+        )}
       <Total>Total: ${cartTotal}</Total>
-      <PaymentForm />
+      {/* <PaymentForm /> */}
     </CheckoutContainer>
   );
 };
